@@ -1,4 +1,6 @@
 import tcod as libtcod
+# # # ASCII Generator: http://patorjk.com/software/taag/#p=display&h=3&f=Big%20Money-ne&t=Structures
+
 import pygame
 import math
 import pickle
@@ -26,14 +28,18 @@ class struc_Tile:
   def __init__(self, block_path):
     self.block_path = block_path
 
-#   /$$$$$$              /$$                                  
-#  /$$__  $$            | $$                                  
-# | $$  \ $$  /$$$$$$$ /$$$$$$    /$$$$$$   /$$$$$$   /$$$$$$$
-# | $$$$$$$$ /$$_____/|_  $$_/   /$$__  $$ /$$__  $$ /$$_____/
-# | $$__  $$| $$        | $$    | $$  \ $$| $$  \__/|  $$$$$$ 
-# | $$  | $$| $$        | $$ /$$| $$  | $$| $$       \____  $$
-# | $$  | $$|  $$$$$$$  |  $$$$/|  $$$$$$/| $$       /$$$$$$$/
-# |__/  |__/ \_______/   \___/   \______/ |__/      |_______/  
+
+#   /$$$$$$ /$$                             /$$            
+#  /$$__  $| $$                            | $$            
+# | $$  \ $| $$$$$$$ /$$ /$$$$$$  /$$$$$$$/$$$$$$  /$$$$$$$
+# | $$  | $| $$__  $|__//$$__  $$/$$_____|_  $$_/ /$$_____/
+# | $$  | $| $$  \ $$/$| $$$$$$$| $$       | $$  |  $$$$$$ 
+# | $$  | $| $$  | $| $| $$_____| $$       | $$ /$\____  $$
+# |  $$$$$$| $$$$$$$| $|  $$$$$$|  $$$$$$$ |  $$$$/$$$$$$$/
+#  \______/|_______/| $$\_______/\_______/  \___/|_______/ 
+#              /$$  | $$                                   
+#             |  $$$$$$/                                   
+#              \______/                                    
                                                                        
 
 class obj_Actor:
@@ -49,6 +55,7 @@ class obj_Actor:
     if self.x + dx >= 0 and self.x + dx < constants.MAP_WIDTH and self.y + dy >= 0 and self.y + dy < constants.MAP_HEIGHT and GAME_MAP[self.x + dx][self.y + dy].block_path == False:
       self.x += dx
       self.y += dy
+
  
 #  /$$      /$$                    
 # | $$$    /$$$                    
@@ -70,6 +77,7 @@ def map_create():
   new_map[10][15].block_path = True
   
   return new_map
+
 
 #  /$$$$$$$                                   /$$                    
 # | $$__  $$                                 |__/                    
@@ -95,6 +103,7 @@ def draw_game():
   
   # draw the character
   PLAYER.draw()
+  ENEMY.draw()
   
   # update the display
   pygame.display.flip()
@@ -108,6 +117,7 @@ def draw_map(map_to_draw):
       else:
         # draw floor
         SURFACE_MAIN.blit(constants.S_FLOOR, ( x * constants.CELL_WIDTH, y * constants.CELL_HEIGHT ))
+
 
 #   /$$$$$$                                   
 #  /$$__  $$                                  
@@ -148,7 +158,7 @@ def game_main_loop():
   exit()
 
 def game_initialize():
-  global SURFACE_MAIN, GAME_MAP, PLAYER
+  global SURFACE_MAIN, GAME_MAP, PLAYER, ENEMY
   
   pygame.init()
   SURFACE_MAIN = pygame.display.set_mode( (constants.GAME_WIDTH, constants.GAME_HEIGHT) )
@@ -156,6 +166,8 @@ def game_initialize():
   GAME_MAP = map_create()
   
   PLAYER = obj_Actor(0, 0, constants.S_PLAYER)
+  
+  ENEMY = obj_Actor(5, 5, constants.S_ENEMY)
  
  
 #  /$$$$$$ /$$   /$$ /$$$$$$ /$$$$$$$$
